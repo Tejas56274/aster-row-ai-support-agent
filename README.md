@@ -1,23 +1,23 @@
 # Aster & Row — Reliable RAG Support Agent
 
-Take-home implementation for the AI Agent Intern assignment.
+Take‑home implementation for the AI Agent Intern assignment.
 
 ## What this builds
 
-A small, reliability-first customer support agent over the supplied Aster & Row
+A small, reliability‑first customer support agent over the supplied Aster & Row
 knowledge base and mock order data.
 
 It provides:
 
-- metadata-aware retrieval over `knowledge-base/*.md`
+- metadata‑aware retrieval over `knowledge-base/*.md`
 - active/official policy precedence and supersession handling
 - source citations (filename + heading)
 - safe abstention when evidence is insufficient
-- explicit handling of genuine active-source conflicts
-- an order lookup tool that returns only customer-safe fields
-- order-ID normalization and safe handling of missing/unknown IDs
-- multi-turn session context for follow-up questions
-- prompt-injection resistance for retrieved content
+- explicit handling of genuine active‑source conflicts
+- an order lookup tool that returns only customer‑safe fields
+- order ID normalization and safe handling of missing/unknown IDs
+- multi‑turn session context for follow‑up questions
+- prompt‑injection resistance for retrieved content
 - privacy protection for internal order fields
 - structured debug traces
 - deterministic regression/evaluation tests
@@ -27,18 +27,18 @@ It provides:
 
 **Framework:** Python + Streamlit.
 
-**Retrieval:** a transparent local TF-IDF-style lexical retriever implemented in
+**Retrieval:** a transparent local TF‑IDF‑style lexical retriever implemented in
 `app/rag.py`. The supplied corpus is small, so a local deterministic index avoids
 unnecessary infrastructure and makes precedence and evaluation easy to inspect.
 
 **Generation/agent behavior:** the core response policy is deterministic and
-grounded in retrieved company content. This is intentional for the take-home:
-the highest-risk behaviors (policy precedence, tool calls, privacy, abstention,
+grounded in retrieved company content. This is intentional for the take‑home:
+the highest‑risk behaviors (policy precedence, tool calls, privacy, abstention,
 and handoff) should be testable without depending on another LLM's nondeterminism.
 The architecture leaves the generation boundary replaceable by an LLM while
 keeping these contracts in application code.
 
-**Storage:** in-memory retrieval index and the supplied JSON order file. No
+**Storage:** in‑memory retrieval index and the supplied JSON order file. No
 production vector database is needed.
 
 ## Setup
@@ -48,7 +48,7 @@ Requires Python 3.10+.
 ```bash
 python -m venv .venv
 # Windows:
-.venv\Scripts\activate
+.venv\\Scripts\\activate
 # macOS/Linux:
 source .venv/bin/activate
 
@@ -99,8 +99,8 @@ pytest -q
 
 ### Baseline
 
-A deliberately simple baseline (single-pass lexical retrieval without explicit
-policy precedence, order-tool privacy filtering, conflict handling, or
+A deliberately simple baseline (single‑pass lexical retrieval without explicit
+policy precedence, order‑tool privacy filtering, conflict handling, or
 conversation state) was evaluated conceptually against the visible behavior
 requirements. It is included as an engineering baseline rather than a claim of
 an external model benchmark:
