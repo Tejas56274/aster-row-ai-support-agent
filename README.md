@@ -1,6 +1,14 @@
 # Aster & Row — Reliable RAG Support Agent
 
-Take-home implementation for the AI Agent Intern assignment.
+## Table of Contents
+- [What this builds](#what-this-builds)
+- [Design choices](#design-choices)
+- [Setup](#setup)
+- [Run the CLI](#run-the-cli)
+- [Run the web UI](#run-the-web-ui)
+- [Run the evaluation suite](#run-the-evaluation-suite)
+- [Tests](#tests)
+- [Evaluation results](#evaluation-results)
 
 ## What this builds
 
