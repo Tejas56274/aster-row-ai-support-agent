@@ -1,49 +1,38 @@
 # Aster & Row — Reliable RAG Support Agent
 
-Take-home implementation for the AI Agent Intern assignment.
+A take‑home implementation for the AI Agent Intern assignment.
 
-## What this builds
+## Overview
 
-A small, reliability-first customer support agent over the supplied Aster & Row
-knowledge base and mock order data.
+This project implements a small, reliability‑first customer support agent that works over the supplied Aster & Row knowledge base and mock order data. Key features include:
 
-It provides:
+- Metadata‑aware retrieval over `knowledge-base/*.md`
+- Active/official policy precedence and supersession handling
+- Source citations (filename + heading)
+- Safe abstention when evidence is insufficient
+- Explicit handling of genuine active‑source conflicts
+- An order‑lookup tool that returns only customer‑safe fields
+- Order ID normalization and safe handling of missing/unknown IDs
+- Multi‑turn session context for follow‑up questions
+- Prompt‑injection resistance for retrieved content
+- Privacy protection for internal order fields
+- Structured debug traces
+- Deterministic regression/evaluation tests
+- A minimal Streamlit interface
 
-- metadata-aware retrieval over `knowledge-base/*.md`
-- active/official policy precedence and supersession handling
-- source citations (filename + heading)
-- safe abstention when evidence is insufficient
-- explicit handling of genuine active-source conflicts
-- an order lookup tool that returns only customer-safe fields
-- order-ID normalization and safe handling of missing/unknown IDs
-- multi-turn session context for follow-up questions
-- prompt-injection resistance for retrieved content
-- privacy protection for internal order fields
-- structured debug traces
-- deterministic regression/evaluation tests
-- a minimal Streamlit interface
+## Design Choices
 
-## Design choices
+- **Framework:** Python + Streamlit.
+- **Retrieval:** A transparent local TF‑IDF‑style lexical retriever (`app/rag.py`). The corpus is small, so a deterministic in‑memory index avoids unnecessary infrastructure and makes precedence and evaluation easy to inspect.
+- **Generation / Agent Behavior:** The core response policy is deterministic and grounded in retrieved company content. This makes high‑risk behaviours (policy precedence, tool calls, privacy, abstention, and handoff) testable without relying on nondeterministic LLM output. The architecture allows swapping the generation component with an LLM while keeping these contracts in application code.
+- **Storage:** In‑memory retrieval index and the supplied JSON order file. No production vector database is required.
 
-**Framework:** Python + Streamlit.
+## Prerequisites
 
-**Retrieval:** a transparent local TF-IDF-style lexical retriever implemented in
-`app/rag.py`. The supplied corpus is small, so a local deterministic index avoids
-unnecessary infrastructure and makes precedence and evaluation easy to inspect.
-
-**Generation/agent behavior:** the core response policy is deterministic and
-grounded in retrieved company content. This is intentional for the take-home:
-the highest-risk behaviors (policy precedence, tool calls, privacy, abstention,
-and handoff) should be testable without depending on another LLM's nondeterminism.
-The architecture leaves the generation boundary replaceable by an LLM while
-keeping these contracts in application code.
-
-**Storage:** in-memory retrieval index and the supplied JSON order file. No
-production vector database is needed.
+- Python 3.10 or newer
+- `pip` (compatible with the Python version above)
 
 ## Setup
-
-Requires Python 3.10+.
 
 ```bash
 python -m venv .venv
@@ -57,7 +46,7 @@ pip install -r requirements.txt
 
 No API key is required.
 
-## Run the CLI
+## Running the CLI
 
 From the repository root:
 
@@ -71,23 +60,21 @@ For structured debug logs:
 python -m app.main --debug
 ```
 
-## Run the web UI
+## Running the Web UI
 
 ```bash
 streamlit run app/streamlit_app.py
 ```
 
-The UI shows the answer, and the debug expander exposes retrieved passages,
-tool calls, sanitized tool results, and handoff state.
+The UI shows the answer, and the debug expander exposes retrieved passages, tool calls, sanitized tool results, and handoff state.
 
-## Run the evaluation suite
+## Evaluation Suite
 
 ```bash
 python evaluation/run_evaluation.py
 ```
 
-The suite covers all 15 supplied visible cases plus 7 original cases. It prints
-individual case results, category results, and an overall result.
+The suite covers all 15 supplied visible cases plus 7 original cases. It prints individual case results, category results, and an overall result.
 
 ## Tests
 
@@ -95,15 +82,11 @@ individual case results, category results, and an overall result.
 pytest -q
 ```
 
-## Evaluation results
+## Evaluation Results
 
 ### Baseline
 
-A deliberately simple baseline (single-pass lexical retrieval without explicit
-policy precedence, order-tool privacy filtering, conflict handling, or
-conversation state) was evaluated conceptually against the visible behavior
-requirements. It is included as an engineering baseline rather than a claim of
-an external model benchmark:
+A deliberately simple baseline (single‑pass lexical retrieval without explicit policy precedence, order‑tool privacy filtering, conflict handling, or conversation state) was evaluated conceptually against the visible behavior requirements. It is included as an engineering baseline rather than a claim of an external model benchmark:
 
 - Retrieval / precedence: 2/5
 - Groundedness / abstention: 2/3
@@ -114,10 +97,9 @@ an external model benchmark:
 
 ### Final
 
-Local verified run on the supplied corpus, all 15 visible cases, and 7 original
-regression cases:
+Local verified run on the supplied corpus, all 15 visible cases, and 7 original regression cases:
 
-```text
+```
 22/22 cases passed (100.0%)
 pytest: 12 passed
 ```
