@@ -16,8 +16,8 @@ It provides:
 - explicit handling of genuine active-source conflicts
 - an order lookup tool that returns only customer-safe fields
 - order-ID normalization and safe handling of missing/unknown IDs
-- multi-turn session context for follow-up questions
-- prompt-injection resistance for retrieved content
+- multi-turn session context for follow‑up questions
+- prompt‑injection resistance for retrieved content
 - privacy protection for internal order fields
 - structured debug traces
 - deterministic regression/evaluation tests
@@ -27,18 +27,18 @@ It provides:
 
 **Framework:** Python + Streamlit.
 
-**Retrieval:** a transparent local TF-IDF-style lexical retriever implemented in
+**Retrieval:** a transparent local TF‑IDF‑style lexical retriever implemented in
 `app/rag.py`. The supplied corpus is small, so a local deterministic index avoids
 unnecessary infrastructure and makes precedence and evaluation easy to inspect.
 
 **Generation/agent behavior:** the core response policy is deterministic and
-grounded in retrieved company content. This is intentional for the take-home:
-the highest-risk behaviors (policy precedence, tool calls, privacy, abstention,
+grounded in retrieved company content. This is intentional for the take‑home:
+the highest‑risk behaviors (policy precedence, tool calls, privacy, abstention,
 and handoff) should be testable without depending on another LLM's nondeterminism.
 The architecture leaves the generation boundary replaceable by an LLM while
 keeping these contracts in application code.
 
-**Storage:** in-memory retrieval index and the supplied JSON order file. No
+**Storage:** in‑memory retrieval index and the supplied JSON order file. No
 production vector database is needed.
 
 ## Setup
@@ -99,8 +99,8 @@ pytest -q
 
 ### Baseline
 
-A deliberately simple baseline (single-pass lexical retrieval without explicit
-policy precedence, order-tool privacy filtering, conflict handling, or
+A deliberately simple baseline (single‑pass lexical retrieval without explicit
+policy precedence, order‑tool privacy filtering, conflict handling, or
 conversation state) was evaluated conceptually against the visible behavior
 requirements. It is included as an engineering baseline rather than a claim of
 an external model benchmark:
@@ -119,7 +119,7 @@ regression cases:
 
 ```text
 22/22 cases passed (100.0%)
-pytest: 12 passed
+pytest: 22 passed
 ```
 
 The evaluation command is deterministic and can be rerun from a clean checkout.
